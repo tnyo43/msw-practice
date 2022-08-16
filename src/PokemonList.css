@@ -1,0 +1,26 @@
+.PokemonList-container {
+  padding: 8px;
+}
+
+.PokemonList-list {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 8px;
+}
+
+.PokemonList-item {
+  width: 200px;
+
+  padding: 8px;
+  border: 1px solid #333
+}
+
+.PokemonList-item-image {
+  height: 96px;
+  display: flex;
+
+}
+
+.PokemonList-item-image img {
+  margin: 0 auto;
+}
