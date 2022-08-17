@@ -31,7 +31,7 @@ export const PokemonList: React.FC<{}> = () => {
     <div className="PokemonList-container">
       <div>
         <div>
-          <input onChange={(e) => setNameSubstring(e.target.value)}/>
+          <input onChange={(e) => setNameSubstring(e.target.value)} placeholder="Pikachu" />
         </div>
         <div>
           <input type="checkbox" id="PokemonList-favorite-toggle" onChange={(e) => setOnlyFavorite(e.target.checked)}/>
