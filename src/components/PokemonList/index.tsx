@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import useSWR from 'swr';
-import { Pokedex } from './types/pokemon';
-import './PokemonList.css';
+import { Pokedex } from '../../types/pokemon';
+import './index.css';
 
 export const PokemonList: React.FC<{}> = () => {
   const [nameSubstring, setNameSubstring] = useState('');
