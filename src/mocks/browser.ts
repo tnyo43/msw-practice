@@ -1,10 +1,10 @@
-import { setupWorker, SetupWorkerApi } from "msw"
-import { handlers } from "./handlers"
+import { setupWorker, SetupWorkerApi } from 'msw';
+import { handlers } from './handlers';
 
-export * from "msw"
+export * from 'msw';
 
-const worker: SetupWorkerApi = setupWorker(...handlers)
+const worker: SetupWorkerApi = setupWorker(...handlers);
 
 export async function startMockWorker() {
-  await worker.start()
+  await worker.start();
 }

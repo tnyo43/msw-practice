@@ -2,9 +2,7 @@ import React from 'react';
 import { PokemonList } from './PokemonList';
 
 const App: React.FC<{}> = () => {
-  return (
-    <PokemonList />
-  )
-}
+  return <PokemonList />;
+};
 
 export default App;

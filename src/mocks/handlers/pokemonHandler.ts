@@ -1,5 +1,5 @@
-import { rest } from "msw"
-import { Pokedex, Pokemon } from "../../types/pokemon";
+import { rest } from 'msw';
+import { Pokedex, Pokemon } from '../../types/pokemon';
 
 const pokemonData: Pokemon[] = [
   {
@@ -38,7 +38,7 @@ const pokemonData: Pokemon[] = [
     name: 'Charizard',
     image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
   },
-]
+];
 
 const favoriteSet = new Set<number>();
 
@@ -50,34 +50,41 @@ export const pokemonHandlers = [
     return res(
       ctx.json(
         pokemonData
-          .filter((pokemon) => nameSubstring === undefined || pokemon.name.toLowerCase().includes(nameSubstring))
-          .map((pokemon) => ({ id: `Pokedex:${pokemon.id}`, pokemon, favorite: favoriteSet.has(pokemon.pokedexNo) }))
+          .filter(
+            (pokemon) =>
+              nameSubstring === undefined || pokemon.name.toLowerCase().includes(nameSubstring)
+          )
+          .map((pokemon) => ({
+            id: `Pokedex:${pokemon.id}`,
+            pokemon,
+            favorite: favoriteSet.has(pokemon.pokedexNo),
+          }))
           .filter((pokedex) => !onlyFavorite || pokedex.favorite)
-        )
-    )
+      )
+    );
   }),
   rest.post('/pokemons/favorite/:pokedexNo', async (req, res, ctx) => {
     const pokedexNoRawText = await req.params.pokedexNo;
     const pokedexNo = Number(pokedexNoRawText);
 
-    favoriteSet.add(pokedexNo)
+    favoriteSet.add(pokedexNo);
 
     return res(
       ctx.json({
         pokedexNo,
       })
-    )
+    );
   }),
   rest.delete('/pokemons/favorite/:pokedexNo', async (req, res, ctx) => {
     const pokedexNoRawText = await req.params.pokedexNo;
     const pokedexNo = Number(pokedexNoRawText);
 
-    favoriteSet.delete(pokedexNo)
+    favoriteSet.delete(pokedexNo);
 
     return res(
       ctx.json({
         pokedexNo,
       })
-    )
-  })
-]
+    );
+  }),
+];
