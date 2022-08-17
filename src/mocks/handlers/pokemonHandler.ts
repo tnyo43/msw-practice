@@ -1,5 +1,5 @@
 import { rest } from "msw"
-import { Pokemon } from "../../types/pokemon";
+import { Pokedex, Pokemon } from "../../types/pokemon";
 
 const pokemonData: Pokemon[] = [
   {
@@ -43,11 +43,15 @@ const pokemonData: Pokemon[] = [
 const favoriteSet = new Set<number>();
 
 export const pokemonHandlers = [
-  rest.get<{}, {}, Pokemon[]>('/pokemons', (req, res, ctx) => {
+  rest.get<{}, {}, Pokedex[]>('/pokemons', (req, res, ctx) => {
     const nameSubstring = req.url.searchParams.get('name')?.toLowerCase();
 
     return res(
-      ctx.json(pokemonData.filter((pokemon) => nameSubstring === undefined || pokemon.name.toLowerCase().includes(nameSubstring)))
+      ctx.json(
+        pokemonData
+          .filter((pokemon) => nameSubstring === undefined || pokemon.name.toLowerCase().includes(nameSubstring))
+          .map((pokemon) => ({ id: `Pokedex:${pokemon.id}`, pokemon, favorite: favoriteSet.has(pokemon.pokedexNo) }))
+        )
     )
   }),
   rest.post('/pokemons/favorite/:pokedexNo', async (req, res, ctx) => {

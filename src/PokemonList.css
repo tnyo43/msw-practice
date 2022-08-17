@@ -29,8 +29,16 @@
   margin: 0 auto;
 }
 
-.PokemonList-item-favorite {
+.PokemonList-item-like-wrapper {
   position: absolute;
   top: 8px;
   right: 8px;
+}
+
+.PokemonList-item-like {
+  background-color: #f88;
+}
+
+.PokemonList-item-unlike {
+  font-weight: 700;
 }
