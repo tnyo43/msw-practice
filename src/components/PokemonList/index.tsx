@@ -32,6 +32,10 @@ export const PokemonList: React.FC<{}> = () => {
     return <p>error!</p>;
   }
 
+  if (!data) {
+    return <p>loading</p>;
+  }
+
   return (
     <div className="PokemonList-container">
       <div>
@@ -47,9 +51,7 @@ export const PokemonList: React.FC<{}> = () => {
           <label htmlFor="PokemonList-favorite-toggle">show only favorite pokemons</label>
         </div>
       </div>
-      {!data ? (
-        <p>loading</p>
-      ) : (
+      {
         <div className="PokemonList-list">
           {data.map(({ id, pokemon, favorite }) => (
             <div key={id} className="PokemonList-item">
@@ -71,7 +73,7 @@ export const PokemonList: React.FC<{}> = () => {
             </div>
           ))}
         </div>
-      )}
+      }
     </div>
   );
 };
