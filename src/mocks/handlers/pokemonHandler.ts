@@ -40,12 +40,38 @@ const pokemonData: Pokemon[] = [
   },
 ]
 
+const favoriteSet = new Set<number>();
+
 export const pokemonHandlers = [
   rest.get<{}, {}, Pokemon[]>('/pokemons', (req, res, ctx) => {
     const nameSubstring = req.url.searchParams.get('name')?.toLowerCase();
 
     return res(
       ctx.json(pokemonData.filter((pokemon) => nameSubstring === undefined || pokemon.name.toLowerCase().includes(nameSubstring)))
+    )
+  }),
+  rest.post('/pokemons/favorite/:pokedexNo', async (req, res, ctx) => {
+    const pokedexNoRawText = await req.params.pokedexNo;
+    const pokedexNo = Number(pokedexNoRawText);
+
+    favoriteSet.add(pokedexNo)
+
+    return res(
+      ctx.json({
+        pokedexNo,
+      })
+    )
+  }),
+  rest.delete('/pokemons/favorite/:pokedexNo', async (req, res, ctx) => {
+    const pokedexNoRawText = await req.params.pokedexNo;
+    const pokedexNo = Number(pokedexNoRawText);
+
+    favoriteSet.delete(pokedexNo)
+
+    return res(
+      ctx.json({
+        pokedexNo,
+      })
     )
   })
 ]

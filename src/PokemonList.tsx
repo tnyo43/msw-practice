@@ -14,6 +14,10 @@ export const PokemonList: React.FC<{}> = () => {
 
   const { data } = useSWR(`/api/pokemons/${nameSubstring}}`, fetchPokemons);
 
+  const onLikePokemon = ({ pokedexNo }: { pokedexNo: number }) => {
+    axios.post(`/pokemons/favorite/${pokedexNo}`).then((result) => result.data);
+  }
+
   return (
     <div className="PokemonList-container">
       <div>
@@ -25,10 +29,15 @@ export const PokemonList: React.FC<{}> = () => {
           <div className="PokemonList-list">
             {data.map((pokemon) => (
               <div key={pokemon.id} className="PokemonList-item">
-                <div>No: {pokemon.pokedexNo}</div>
-                <div>name: {pokemon.name}</div>
-                <div className="PokemonList-item-image">
-                  <img src={pokemon.image} alt={'pokemon'} />
+                <div className="PokemonList-item-favorite">
+                  <button onClick={() => onLikePokemon(pokemon)}>like</button>
+                </div>
+                <div>
+                  <div>No: {pokemon.pokedexNo}</div>
+                  <div>name: {pokemon.name}</div>
+                  <div className="PokemonList-item-image">
+                    <img src={pokemon.image} alt={'pokemon'} />
+                  </div>
                 </div>
               </div>
             ))}
