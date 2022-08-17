@@ -3,8 +3,4 @@ import { handlers } from './handlers';
 
 export * from 'msw';
 
-const worker: SetupWorkerApi = setupWorker(...handlers);
-
-export async function startMockWorker() {
-  await worker.start();
-}
+export const worker: SetupWorkerApi = setupWorker(...handlers);
