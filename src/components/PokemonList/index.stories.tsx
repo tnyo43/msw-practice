@@ -1,8 +1,7 @@
 import { PokemonList } from '.';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { useEffect } from 'react';
-import { pokemonHandlerWithError } from '../../mocks/handlers/pokemonHandlers/error';
-import { pokemonHandlerVerySlow } from '../../mocks/handlers/pokemonHandlers/slow';
+import { pokemonHandlers } from '../../mocks/handlers/pokemonHandlers';
 
 export default {
   title: 'PokemonList',
@@ -19,7 +18,7 @@ export const Loading: ComponentStory<typeof PokemonList> = () => {
   useEffect(() => {
     return () => worker.resetHandlers();
   }, []);
-  worker.use(pokemonHandlerVerySlow);
+  worker.use(pokemonHandlers.slow);
 
   return <PokemonList />;
 };
@@ -30,7 +29,7 @@ export const Error: ComponentStory<typeof PokemonList> = () => {
   useEffect(() => {
     return () => worker.resetHandlers();
   }, []);
-  worker.use(pokemonHandlerWithError);
+  worker.use(pokemonHandlers.error);
 
   return <PokemonList />;
 };

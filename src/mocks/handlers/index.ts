@@ -1,3 +1,3 @@
 import { pokemonHandlers } from './pokemonHandlers';
 
-export const handlers = [...pokemonHandlers];
+export const handlers = [...pokemonHandlers.default];
