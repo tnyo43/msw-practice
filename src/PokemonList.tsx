@@ -7,12 +7,16 @@ import './PokemonList.css';
 
 export const PokemonList: React.FC<{}> = () => {
   const [nameSubstring, setNameSubstring] = useState('');
+  const [onlyFavorite, setOnlyFavorite] = useState(false);
 
   const fetchPokemons = (): Promise<Pokedex[]> => {
-    return axios.get<Pokedex[]>(`/pokemons${nameSubstring !== '' ? `?name=${nameSubstring}` : ''}`).then((resule) => resule.data);
+    return axios.get<Pokedex[]>(
+      '/pokemons',
+      { params: { name: nameSubstring, onlyFavorite }}
+    ).then((resule) => resule.data);
   }  
 
-  const { data, mutate } = useSWR(`/api/pokemons/${nameSubstring}}`, fetchPokemons);
+  const { data, mutate } = useSWR(`/api/pokemons/${onlyFavorite}/${nameSubstring}}`, fetchPokemons);
 
   const onLikePokemon = ({ pokedexNo }: { pokedexNo: number }) => {
     axios.post(`/pokemons/favorite/${pokedexNo}`).then((result) => result.data);
@@ -26,7 +30,13 @@ export const PokemonList: React.FC<{}> = () => {
   return (
     <div className="PokemonList-container">
       <div>
-        <input onChange={(e) => setNameSubstring(e.target.value)} />
+        <div>
+          <input onChange={(e) => setNameSubstring(e.target.value)}/>
+        </div>
+        <div>
+          <input type="checkbox" id="PokemonList-favorite-toggle" onChange={(e) => setOnlyFavorite(e.target.checked)}/>
+          <label htmlFor="PokemonList-favorite-toggle">show only favorite pokemons</label>
+        </div>
       </div>
       {!data
         ? <p>loading</p>

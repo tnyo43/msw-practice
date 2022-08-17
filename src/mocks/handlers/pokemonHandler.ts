@@ -45,12 +45,14 @@ const favoriteSet = new Set<number>();
 export const pokemonHandlers = [
   rest.get<{}, {}, Pokedex[]>('/pokemons', (req, res, ctx) => {
     const nameSubstring = req.url.searchParams.get('name')?.toLowerCase();
+    const onlyFavorite = req.url.searchParams.get('onlyFavorite') === 'true';
 
     return res(
       ctx.json(
         pokemonData
           .filter((pokemon) => nameSubstring === undefined || pokemon.name.toLowerCase().includes(nameSubstring))
           .map((pokemon) => ({ id: `Pokedex:${pokemon.id}`, pokemon, favorite: favoriteSet.has(pokemon.pokedexNo) }))
+          .filter((pokedex) => !onlyFavorite || pokedex.favorite)
         )
     )
   }),
