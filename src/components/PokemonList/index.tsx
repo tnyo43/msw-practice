@@ -14,7 +14,10 @@ export const PokemonList: React.FC<{}> = () => {
       .then((resule) => resule.data);
   };
 
-  const { data, mutate } = useSWR(`/api/pokemons/${onlyFavorite}/${nameSubstring}}`, fetchPokemons);
+  const { data, error, mutate } = useSWR(
+    `/api/pokemons/${onlyFavorite}/${nameSubstring}}`,
+    fetchPokemons
+  );
 
   const onLikePokemon = ({ pokedexNo }: { pokedexNo: number }) => {
     axios.post(`/pokemons/favorite/${pokedexNo}`).then((result) => result.data);
@@ -24,6 +27,10 @@ export const PokemonList: React.FC<{}> = () => {
     axios.delete(`/pokemons/favorite/${pokedexNo}`).then((result) => result.data);
     mutate();
   };
+
+  if (error) {
+    return <p>error!</p>;
+  }
 
   return (
     <div className="PokemonList-container">

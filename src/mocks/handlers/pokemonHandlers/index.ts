@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { Pokedex, Pokemon } from '../../types/pokemon';
+import { Pokedex, Pokemon } from '../../../types/pokemon';
 
 const pokemonData: Pokemon[] = [
   {
