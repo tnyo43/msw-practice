@@ -1,3 +1,5 @@
+import { SWRConfig } from 'swr';
+
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
@@ -14,3 +16,13 @@ if (typeof global.process === 'undefined') {
   worker.start();
   window.msw = { worker };
 }
+
+export const decorators = [
+  (Story) => {
+    return (
+      <SWRConfig value={{ provider: () => new Map() }}>
+        <Story />
+      </SWRConfig>
+    );
+  },
+];
